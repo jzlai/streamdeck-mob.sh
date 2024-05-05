@@ -2,21 +2,31 @@
 /*eslint no-unused-vars: "off"*/
 /*eslint-env es6*/
 
-let ESDTimerWorker = new Worker(URL.createObjectURL(
-	new Blob([timerFn.toString().replace(/^[^{]*{\s*/, '').replace(/\s*}[^}]*$/, '')], {type: 'text/javascript'})
-));
+let ESDTimerWorker = new Worker(
+	URL.createObjectURL(
+		new Blob(
+			[
+				timerFn
+					.toString()
+					.replace(/^[^{]*{\s*/, '')
+					.replace(/\s*}[^}]*$/, ''),
+			],
+			{ type: 'text/javascript' },
+		),
+	),
+);
 ESDTimerWorker.timerId = 1;
 ESDTimerWorker.timers = {};
 const ESDDefaultTimeouts = {
 	timeout: 0,
-	interval: 10
+	interval: 10,
 };
 
 Object.freeze(ESDDefaultTimeouts);
 
 function _setTimer(callback, delay, type, params) {
 	const id = ESDTimerWorker.timerId++;
-	ESDTimerWorker.timers[id] = {callback, params};
+	ESDTimerWorker.timers[id] = { callback, params };
 	ESDTimerWorker.onmessage = (e) => {
 		if (ESDTimerWorker.timers[e.data.id]) {
 			if (e.data.type === 'clearTimer') {
@@ -27,7 +37,7 @@ function _setTimer(callback, delay, type, params) {
 			}
 		}
 	};
-	ESDTimerWorker.postMessage({type, id, delay});
+	ESDTimerWorker.postMessage({ type, id, delay });
 	return id;
 }
 
@@ -42,7 +52,7 @@ function _setIntervalESD(...args) {
 }
 
 function _clearTimeoutESD(id) {
-	ESDTimerWorker.postMessage({type: 'clearTimeout', id}); //     ESDTimerWorker.postMessage({type: 'clearInterval', id}); = same thing
+	ESDTimerWorker.postMessage({ type: 'clearTimeout', id }); //     ESDTimerWorker.postMessage({type: 'clearInterval', id}); = same thing
 	delete ESDTimerWorker.timers[id];
 }
 
@@ -72,7 +82,7 @@ function timerFn() {
 			if (debug) console.log('clearTimerAndRemove', id, timers[id], timers);
 			clearTimeout(timers[id]);
 			delete timers[id];
-			postMessage({type: 'clearTimer', id: id});
+			postMessage({ type: 'clearTimer', id: id });
 			if (debug) log();
 		}
 	}
@@ -80,16 +90,24 @@ function timerFn() {
 	onmessage = function (e) {
 		// first see, if we have a timer with this id and remove it
 		// this automatically fulfils clearTimeout and clearInterval
-		supportedCommands.includes(e.data.type) && timers[e.data.id] && clearTimerAndRemove(e.data.id);
+		supportedCommands.includes(e.data.type) &&
+			timers[e.data.id] &&
+			clearTimerAndRemove(e.data.id);
 		if (e.data.type === 'setTimeout') {
-			timers[e.data.id] = setTimeout(() => {
-				postMessage({id: e.data.id});
-				clearTimerAndRemove(e.data.id); //cleaning up
-			}, Math.max(e.data.delay || 0));
+			timers[e.data.id] = setTimeout(
+				() => {
+					postMessage({ id: e.data.id });
+					clearTimerAndRemove(e.data.id); //cleaning up
+				},
+				Math.max(e.data.delay || 0),
+			);
 		} else if (e.data.type === 'setInterval') {
-			timers[e.data.id] = setInterval(() => {
-				postMessage({id: e.data.id});
-			}, Math.max(e.data.delay || ESDDefaultTimeouts.interval));
+			timers[e.data.id] = setInterval(
+				() => {
+					postMessage({ id: e.data.id });
+				},
+				Math.max(e.data.delay || ESDDefaultTimeouts.interval),
+			);
 		}
 	};
 }

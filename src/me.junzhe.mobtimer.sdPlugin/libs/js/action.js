@@ -12,7 +12,7 @@ class ELGSDAction {
 	constructor(UUID) {
 		if (!UUID) {
 			console.error(
-				'An action UUID matching the action UUID in your manifest is required when creating Actions.'
+				'An action UUID matching the action UUID in your manifest is required when creating Actions.',
 			);
 		}
 
@@ -26,7 +26,7 @@ class ELGSDAction {
 	onDidReceiveSettings(fn) {
 		if (!fn) {
 			console.error(
-				'A callback function for the didReceiveSettings event is required for onDidReceiveSettings.'
+				'A callback function for the didReceiveSettings event is required for onDidReceiveSettings.',
 			);
 		}
 
@@ -66,7 +66,9 @@ class ELGSDAction {
 	 */
 	onWillAppear(fn) {
 		if (!fn) {
-			console.error('A callback function for the willAppear event is required for onWillAppear.');
+			console.error(
+				'A callback function for the willAppear event is required for onWillAppear.',
+			);
 		}
 
 		this.on(`${this.UUID}.${Events.willAppear}`, (jsn) => fn(jsn));
@@ -80,7 +82,7 @@ class ELGSDAction {
 	onWillDisappear(fn) {
 		if (!fn) {
 			console.error(
-				'A callback function for the willDisappear event is required for onWillDisappear.'
+				'A callback function for the willDisappear event is required for onWillDisappear.',
 			);
 		}
 
@@ -95,7 +97,7 @@ class ELGSDAction {
 	onTitleParametersDidChange(fn) {
 		if (!fn) {
 			console.error(
-				'A callback function for the titleParametersDidChange event is required for onTitleParametersDidChange.'
+				'A callback function for the titleParametersDidChange event is required for onTitleParametersDidChange.',
 			);
 		}
 
@@ -110,7 +112,7 @@ class ELGSDAction {
 	onPropertyInspectorDidAppear(fn) {
 		if (!fn) {
 			console.error(
-				'A callback function for the propertyInspectorDidAppear event is required for onPropertyInspectorDidAppear.'
+				'A callback function for the propertyInspectorDidAppear event is required for onPropertyInspectorDidAppear.',
 			);
 		}
 
@@ -125,7 +127,7 @@ class ELGSDAction {
 	onPropertyInspectorDidDisappear(fn) {
 		if (!fn) {
 			console.error(
-				'A callback function for the propertyInspectorDidDisappear event is required for onPropertyInspectorDidDisappear.'
+				'A callback function for the propertyInspectorDidDisappear event is required for onPropertyInspectorDidDisappear.',
 			);
 		}
 
@@ -140,7 +142,7 @@ class ELGSDAction {
 	onSendToPlugin(fn) {
 		if (!fn) {
 			console.error(
-				'A callback function for the sendToPlugin event is required for onSendToPlugin.'
+				'A callback function for the sendToPlugin event is required for onSendToPlugin.',
 			);
 		}
 
@@ -154,7 +156,9 @@ class ELGSDAction {
 	 */
 	onDialRotate(fn) {
 		if (!fn) {
-			console.error('A callback function for the onDialRotate event is required for onDialRotate.');
+			console.error(
+				'A callback function for the onDialRotate event is required for onDialRotate.',
+			);
 		}
 		this.on(`${this.UUID}.${Events.dialRotate}`, (jsn) => fn(jsn));
 		return this;
@@ -166,7 +170,9 @@ class ELGSDAction {
 	 */
 	onDialPress(fn) {
 		if (!fn) {
-			console.error('A callback function for the dialPress event is required for onDialPress.');
+			console.error(
+				'A callback function for the dialPress event is required for onDialPress.',
+			);
 		}
 		this.on(`${this.UUID}.${Events.dialPress}`, (jsn) => fn(jsn));
 		return this;
@@ -203,7 +209,7 @@ class ELGSDAction {
 	onTouchTap(fn) {
 		if (!fn) {
 			console.error(
-				'A callback function for the onTouchTap event is required for onTouchTap.'
+				'A callback function for the onTouchTap event is required for onTouchTap.',
 			);
 		}
 		this.on(`${this.UUID}.${Events.touchTap}`, (jsn) => fn(jsn));

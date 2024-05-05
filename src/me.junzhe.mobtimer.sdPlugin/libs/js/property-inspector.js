@@ -24,7 +24,7 @@ class ELGSDPropertyInspector extends ELGSDApi {
 
 		if (!fn) {
 			console.error(
-				'A callback function for the sendToPropertyInspector event is required for onSendToPropertyInspector.'
+				'A callback function for the sendToPropertyInspector event is required for onSendToPropertyInspector.',
 			);
 		}
 

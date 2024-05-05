@@ -1,0 +1,14 @@
+{
+  "name": "streamdeck-plugin-mobtimer",
+  "version": "0.0.1",
+  "description": "Adds a timer for a configured room on https://timer.mob.sh/",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jzlai",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^3.2.5"
+  }
+}

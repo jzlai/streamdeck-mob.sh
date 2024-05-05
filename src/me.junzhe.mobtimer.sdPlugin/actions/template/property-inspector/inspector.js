@@ -2,34 +2,33 @@
 /// <reference path="../../../libs/js/utils.js" />
 
 $PI.onConnected((jsn) => {
-    const form = document.querySelector('#property-inspector');
-    const {actionInfo, appInfo, connection, messageType, port, uuid} = jsn;
-    const {payload, context} = actionInfo;
-    const {settings} = payload;
+  const form = document.querySelector('#property-inspector');
+  const { actionInfo, appInfo, connection, messageType, port, uuid } = jsn;
+  const { payload, context } = actionInfo;
+  const { settings } = payload;
 
-    Utils.setFormValue(settings, form);
+  Utils.setFormValue(settings, form);
 
-    form.addEventListener(
-        'input',
-        Utils.debounce(250, () => {
-            const value = Utils.getFormValue(form);
-            $PI.setSettings(value);
-        })
-    );
+  form.addEventListener(
+    'input',
+    Utils.debounce(250, () => {
+      const value = Utils.getFormValue(form);
+      $PI.setSettings(value);
+    }),
+  );
 });
 
-$PI.onDidReceiveGlobalSettings(({payload}) => {
-    console.log('onDidReceiveGlobalSettings', payload);
-})
+$PI.onDidReceiveGlobalSettings(({ payload }) => {
+  console.log('onDidReceiveGlobalSettings', payload);
+});
 
 /**
  * Provide window level functions to use in the external window
  * (this can be removed if the external window is not used)
  */
 window.sendToInspector = (data) => {
-    console.log(data);
+  console.log(data);
 };
-
 
 /** 
  * TABS
@@ -59,34 +58,34 @@ window.sendToInspector = (data) => {
  */
 
 function activateTabs(activeTab) {
-    const allTabs = Array.from(document.querySelectorAll('.tab'));
-    let activeTabEl = null;
-    allTabs.forEach((el, i) => {
-        el.onclick = () => clickTab(el);
-        if(el.dataset?.target === activeTab) {
-            activeTabEl = el;
-        }
-    });
-    if(activeTabEl) {
-        clickTab(activeTabEl);
-    } else if(allTabs.length) {
-        clickTab(allTabs[0]);
+  const allTabs = Array.from(document.querySelectorAll('.tab'));
+  let activeTabEl = null;
+  allTabs.forEach((el, i) => {
+    el.onclick = () => clickTab(el);
+    if (el.dataset?.target === activeTab) {
+      activeTabEl = el;
     }
+  });
+  if (activeTabEl) {
+    clickTab(activeTabEl);
+  } else if (allTabs.length) {
+    clickTab(allTabs[0]);
+  }
 }
 
 function clickTab(clickedTab) {
-    const allTabs = Array.from(document.querySelectorAll('.tab'));
-    allTabs.forEach((el, i) => el.classList.remove('selected'));
-    clickedTab.classList.add('selected');
-    activeTab = clickedTab.dataset?.target;
-    allTabs.forEach((el, i) => {
-        if(el.dataset.target) {
-            const t = document.querySelector(el.dataset.target);
-            if(t) {
-                t.style.display = el == clickedTab ? 'block' : 'none';
-            }
-        }
-    });
+  const allTabs = Array.from(document.querySelectorAll('.tab'));
+  allTabs.forEach((el, i) => el.classList.remove('selected'));
+  clickedTab.classList.add('selected');
+  activeTab = clickedTab.dataset?.target;
+  allTabs.forEach((el, i) => {
+    if (el.dataset.target) {
+      const t = document.querySelector(el.dataset.target);
+      if (t) {
+        t.style.display = el == clickedTab ? 'block' : 'none';
+      }
+    }
+  });
 }
 
 activateTabs();

@@ -188,7 +188,7 @@ class ELGSDStreamDeck extends ELGSDApi {
 	onDeviceDidConnect(fn) {
 		if (!fn) {
 			console.error(
-				'A callback function for the deviceDidConnect event is required for onDeviceDidConnect.'
+				'A callback function for the deviceDidConnect event is required for onDeviceDidConnect.',
 			);
 		}
 
@@ -204,7 +204,7 @@ class ELGSDStreamDeck extends ELGSDApi {
 	onDeviceDidDisconnect(fn) {
 		if (!fn) {
 			console.error(
-				'A callback function for the deviceDidDisconnect event is required for onDeviceDidDisconnect.'
+				'A callback function for the deviceDidDisconnect event is required for onDeviceDidDisconnect.',
 			);
 		}
 
@@ -220,7 +220,7 @@ class ELGSDStreamDeck extends ELGSDApi {
 	onApplicationDidLaunch(fn) {
 		if (!fn) {
 			console.error(
-				'A callback function for the applicationDidLaunch event is required for onApplicationDidLaunch.'
+				'A callback function for the applicationDidLaunch event is required for onApplicationDidLaunch.',
 			);
 		}
 
@@ -236,7 +236,7 @@ class ELGSDStreamDeck extends ELGSDApi {
 	onApplicationDidTerminate(fn) {
 		if (!fn) {
 			console.error(
-				'A callback function for the applicationDidTerminate event is required for onApplicationDidTerminate.'
+				'A callback function for the applicationDidTerminate event is required for onApplicationDidTerminate.',
 			);
 		}
 
@@ -252,7 +252,7 @@ class ELGSDStreamDeck extends ELGSDApi {
 	onSystemDidWakeUp(fn) {
 		if (!fn) {
 			console.error(
-				'A callback function for the systemDidWakeUp event is required for onSystemDidWakeUp.'
+				'A callback function for the systemDidWakeUp event is required for onSystemDidWakeUp.',
 			);
 		}
 

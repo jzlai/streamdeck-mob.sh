@@ -3,8 +3,7 @@ String.prototype.lox = function () {
 	var a = String(this);
 	try {
 		a = $localizedStrings[a] || a;
-	} catch (b) {
-	}
+	} catch (b) {}
 	return a;
 };
 

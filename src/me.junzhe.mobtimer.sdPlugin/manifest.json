@@ -1,42 +1,42 @@
 {
-	"SDKVersion": 2,
-	"Author": "Jun-Zhe Lai",
-	"CodePath": "app.html",
-	"Description": "Timer for mob.sh",
-	"Name": "Stream Deck timer.mob.sh plugin",
-	"Icon": "actions/template/assets/action",
-	"URL": "https://github.com/jzlai/streamdeck-mob.sh/blob/4c217d98c08346439e699fae5adbc4401edf2c98/README.md",
-	"Version": "0.0.1",
-	"Software": {
-		"MinimumVersion": "5.0"
-	},
-	"OS": [
-		{
-			"Platform": "mac",
-			"MinimumVersion": "10.11"
-		},
-		{
-			"Platform": "windows",
-			"MinimumVersion": "10"
-		}
-	],
-	"Category": "mob.sh",
-	"CategoryIcon": "actions/template/assets/actionimage",
-	"Actions": [
-		{
-			"Icon": "actions/template/assets/actionimage",
-			"Name": "Add Timer",
-			"Controllers": ["Keypad"],
-			"States": [
-				{
-					"Image": "actions/template/assets/black",
-					"FontSize": "14",
-					"TitleAlignment": "middle"
-				}
-			],
-			"Tooltip": "Adds a timer",
-			"UUID": "me.junzhe.mobtimer.action",
-			"PropertyInspectorPath": "actions/template/property-inspector/inspector.html"
-		}
-	]
+  "SDKVersion": 2,
+  "Author": "jzlai",
+  "CodePath": "app.html",
+  "Description": "Timer for mob.sh",
+  "Name": "Stream Deck timer.mob.sh plugin",
+  "Icon": "actions/template/assets/action",
+  "URL": "https://github.com/jzlai/streamdeck-mob.sh/blob/4c217d98c08346439e699fae5adbc4401edf2c98/README.md",
+  "Version": "0.0.1",
+  "Software": {
+    "MinimumVersion": "5.0"
+  },
+  "OS": [
+    {
+      "Platform": "mac",
+      "MinimumVersion": "10.11"
+    },
+    {
+      "Platform": "windows",
+      "MinimumVersion": "10"
+    }
+  ],
+  "Category": "mob.sh",
+  "CategoryIcon": "actions/template/assets/actionimage",
+  "Actions": [
+    {
+      "Icon": "actions/template/assets/actionimage",
+      "Name": "Add Timer",
+      "Controllers": ["Keypad"],
+      "States": [
+        {
+          "Image": "actions/template/assets/black",
+          "FontSize": "14",
+          "TitleAlignment": "middle"
+        }
+      ],
+      "Tooltip": "Adds a timer",
+      "UUID": "me.junzhe.mobtimer.action",
+      "PropertyInspectorPath": "actions/template/property-inspector/inspector.html"
+    }
+  ]
 }

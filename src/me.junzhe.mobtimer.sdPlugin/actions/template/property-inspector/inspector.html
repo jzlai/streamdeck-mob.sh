@@ -1,31 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta
-          name="viewport"
-          content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui,viewport-fit=cover" />
+      name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui,viewport-fit=cover"
+    />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <title>me.junzhe.mobtimer Property Inspector</title>
     <link rel="stylesheet" href="../../../libs/css/sdpi.css" />
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="sdpi-wrapper">
-        <form id="property-inspector">
-                <div class="sdpi-item">
-                    <div data-localize class="sdpi-item-label">Host</div>
-                    <input data-localize class="sdpi-item-value" name="host" type="text" value="https://timer.mob.sh"/>
-                </div>
+      <form id="property-inspector">
+        <div class="sdpi-item">
+          <div data-localize class="sdpi-item-label">Host</div>
+          <input
+            data-localize
+            class="sdpi-item-value"
+            name="host"
+            type="text"
+            value="https://timer.mob.sh"
+          />
+        </div>
 
-                <div class="sdpi-item">
-                    <div data-localize class="sdpi-item-label">Room</div>
-                    <input data-localize class="sdpi-item-value" name="room" type="text" value=""/>
-                </div>
-            </div>
-        </form>
+        <div class="sdpi-item">
+          <div data-localize class="sdpi-item-label">Room</div>
+          <input
+            data-localize
+            class="sdpi-item-value"
+            name="room"
+            type="text"
+            value=""
+          />
+        </div>
+      </form>
     </div>
 
     <!-- Stream Deck Libs -->
@@ -40,6 +51,5 @@
 
     <!-- Property Inspector Source -->
     <script src="inspector.js"></script>
-</body>
-
+  </body>
 </html>
