@@ -1,3 +1,3 @@
-[submodule "src/sh.mob.timer/libs"]
-	path = src/sh.mob.timer/libs
+[submodule "src/me.junzhe.mobtimer/libs"]
+	path = src/me.junzhe.mobtimer/libs
 	url = https://github.com/elgatosf/streamdeck-javascript-sdk

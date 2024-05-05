@@ -11,7 +11,7 @@ $PI.onConnected((jsn) => {
 
     form.addEventListener(
         'input',
-        Utils.debounce(150, () => {
+        Utils.debounce(250, () => {
             const value = Utils.getFormValue(form);
             $PI.setSettings(value);
         })
@@ -29,10 +29,6 @@ $PI.onDidReceiveGlobalSettings(({payload}) => {
 window.sendToInspector = (data) => {
     console.log(data);
 };
-
-document.querySelector('#open-external').addEventListener('click', () => {
-    window.open('../../../external.html');
-});
 
 
 /** 
