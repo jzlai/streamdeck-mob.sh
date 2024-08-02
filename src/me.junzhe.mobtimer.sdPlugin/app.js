@@ -6,8 +6,8 @@ let requestedTimestamp = null;
 let timerDurationInMilliseconds = null;
 let roomEventsUrl;
 let hostUrl;
-let eventSource;
-let interval;
+
+
 /**
  * The first event fired when Stream Deck starts
  */
@@ -17,19 +17,12 @@ $SD.onConnected(
   },
 );
 
-myAction.onKeyUp(async ({ action, context, device, event, payload: { settings } }) => {
-  const { host, room, name, timer } = settings;
-  try {
-    await fetch(`${host}/${room}`, {
-      method: 'PUT',
-      headers: { 
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify({ breaktimer: Number(timer), user: name })
-    })
-  } catch(err) {
-    console.error('Putting timer failed', err)
-  }
+myAction.onTouchTap(({payload: { settings, hold }}) => {
+  hold ? setTimer(settings, 'timer') : setTimer(settings, 'breaktimer')
+})
+
+myAction.onKeyUp(({ action, context, device, event, payload: { settings } }) => {
+  setTimer(settings, 'breaktimer')
 });
 
 myAction.onDialRotate(({ action, context, device, event, payload }) => {
@@ -37,18 +30,20 @@ myAction.onDialRotate(({ action, context, device, event, payload }) => {
 });
 
 myAction.onWillAppear(({ context }) => {
-  $SD.getSettings(context);
+  $SD.getSettings(context, 'breaktimer');
 });
 
 $SD.onDidReceiveSettings(
   myAction.UUID,
-  ({ payload: { settings }, context }) => {
+  ({ payload, device, action, context }) => {
+    let eventSource;
+    let interval;
     try {
       if (eventSource && eventSource.readyState === EventSource.OPEN) {
         console.log('closing open EventSource');
         eventSource.close();
       }
-      const { host, room } = settings;
+      const { settings: { host, room }, controller  } = payload;
       roomEventsUrl = `${host}/${room}/events`;
 
       eventSource = new EventSource(roomEventsUrl);
@@ -66,7 +61,7 @@ $SD.onDidReceiveSettings(
         let { requested, timer: timerInMinutes, type } = timerRequest;
         if (!requested) {
           console.log('no requested', requested);
-          reset(context);
+          reset(context, interval, controller);
           return;
         }
         requestedTimestamp = Date.parse(requested);
@@ -75,7 +70,7 @@ $SD.onDidReceiveSettings(
           let elapsedMillisecondsSinceRequested =
             Date.now() - requestedTimestamp;
           if (elapsedMillisecondsSinceRequested > timerDurationInMilliseconds) {
-            reset(context);
+            reset(context, interval, controller);
             return;
           }
           const remainingTime = getCountdownRemainingTimeString(
@@ -83,20 +78,20 @@ $SD.onDidReceiveSettings(
             elapsedMillisecondsSinceRequested,
           );
           const prefix = type === 'BREAKTIMER' ? '☕' : '⏲️';
-          $SD.setTitle(context, `${prefix} ${remainingTime}`);
+          setText(context, `${prefix} ${remainingTime}`, controller)
         }, 1000);
       });
     } catch (error) {
       console.error(error);
-      reset(context);
+      reset(context, interval);
     }
   },
 );
 
-function getCountdownRemainingTimeString(
+const getCountdownRemainingTimeString = (
   timerDurationInMilliseconds,
   elapsedMillisecondsSinceRequested,
-) {
+) => {
   let remainingDurationInMilliseconds =
     timerDurationInMilliseconds - elapsedMillisecondsSinceRequested;
   let remainingSeconds = Math.floor(remainingDurationInMilliseconds / 1000);
@@ -105,11 +100,35 @@ function getCountdownRemainingTimeString(
   return `${addLeadingZero(remainingMinutesPart)}:${addLeadingZero(remainingSecondsPart)}`;
 }
 
-function addLeadingZero(num) {
+const addLeadingZero = (num) => {
   return (num < 10 ? '0' : '') + num;
 }
 
-function reset(context) {
+const reset =(context, interval, controller) => {
   clearInterval(interval);
   $SD.setTitle(context, 'mob timer');
+  $SD.setFeedback(context, {value: 'mob timer'})
+}
+
+const setText = (context, text, controller) => {
+  if(controller === 'Keypad') {
+    $SD.setTitle(context, text);
+  } else {
+    $SD.setFeedback(context, { value: text })
+  }
+}
+
+const setTimer = async (settings, timerType) => {
+  const { host, room, name, timer } = settings;
+  try {
+    await fetch(`${host}/${room}`, {
+      method: 'PUT',
+      headers: { 
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({ [timerType]: Number(timer), user: name })
+    })
+  } catch(err) {
+    console.error('Putting timer failed', err)
+  }
 }

@@ -25,8 +25,21 @@
   "Actions": [
     {
       "Icon": "actions/template/assets/actionimage",
-      "Name": "Add Timer",
-      "Controllers": ["Keypad"],
+      "Name": "Timer",
+      "Controllers": [
+        "Keypad",
+        "Encoder"
+      ],
+      "Encoder": {
+        "background": "backgroundImage",
+        "Icon": "StackAndLayoutImage",
+        "layout": "layout/customlayout.json",
+        "StackColor": "#AABBCC",
+        "TriggerDescription": {
+          "Touch": "Start break timer",
+          "LongTouch": "Start mob timer"
+        }
+      },
       "States": [
         {
           "Image": "actions/template/assets/black",

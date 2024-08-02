@@ -1,0 +1,36 @@
+{
+    "id": "me.junzhe.mobtimer.layout",
+    "items": [
+        {
+            "key": "title",
+            "type": "text",
+            "rect": [
+                16,
+                10,
+                136,
+                24
+            ],
+            "font": {
+                "size": 16,
+                "weight": 600
+            },
+            "alignment": "left"
+        },
+        {
+            "key": "value",
+            "type": "text",
+            "rect": [
+                16,
+                40,
+                136,
+                32
+            ],
+            "font": {
+                "size": 22,
+                "weight": 600
+            },
+            "alignment": "center",
+            "value": "mob timer"
+        }
+    ]
+}
