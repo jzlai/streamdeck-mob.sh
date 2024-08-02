@@ -17,8 +17,19 @@ $SD.onConnected(
   },
 );
 
-myAction.onKeyUp(({ action, context, device, event, payload }) => {
-  console.log('Your key code goes here!');
+myAction.onKeyUp(async ({ action, context, device, event, payload: { settings } }) => {
+  const { host, room, name, timer } = settings;
+  try {
+    await fetch(`${host}/${room}`, {
+      method: 'PUT',
+      headers: { 
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({ breaktimer: Number(timer), user: name })
+    })
+  } catch(err) {
+    console.error('Putting timer failed', err)
+  }
 });
 
 myAction.onDialRotate(({ action, context, device, event, payload }) => {
@@ -33,7 +44,6 @@ $SD.onDidReceiveSettings(
   myAction.UUID,
   ({ payload: { settings }, context }) => {
     try {
-      console.log('received settings', settings);
       if (eventSource && eventSource.readyState === EventSource.OPEN) {
         console.log('closing open EventSource');
         eventSource.close();
