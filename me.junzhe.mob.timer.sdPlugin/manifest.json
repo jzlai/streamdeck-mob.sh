@@ -1,0 +1,75 @@
+{
+	"Name": "mob timer",
+	"Version": "0.1.0.0",
+	"Author": "Jun-Zhe Lai",
+	"Actions": [
+		{
+			"Name": "Counter",
+			"UUID": "me.junzhe.mob.timer.increment",
+			"Icon": "imgs/actions/counter/icon",
+			"Tooltip": "Displays a count, which increments by one on press.",
+			"PropertyInspectorPath": "ui/increment-counter.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/counter/key",
+					"TitleAlignment": "middle"
+				}
+			]
+		},
+		{
+		"Icon": "imgs/actions/timer/icon",
+		"Name": "Timer",
+		"Controllers": [
+			"Keypad",
+			"Encoder"
+		],
+		"Encoder": {
+			"background": "backgroundImage",
+			"Icon": "StackAndLayoutImage",
+			"layout": "layout/customlayout.json",
+			"StackColor": "#AABBCC",
+			"TriggerDescription": {
+			"Touch": "Start break timer",
+			"LongTouch": "Start mob timer"
+			}
+		},
+		"States": [
+			{
+			"Image": "actions/template/assets/black",
+			"FontSize": 14,
+			"TitleAlignment": "middle"
+			}
+		],
+		"Tooltip": "Adds a timer",
+		"UUID": "me.junzhe.mobtimer.action",
+		"PropertyInspectorPath": "ui/timer.html"
+		}
+	],
+	"Category": "mob timer",
+	"CategoryIcon": "imgs/plugin/category-icon",
+	"CodePath": "bin/plugin.js",
+	"Description": "A Stream Deck plugin that integrates with https://timer.mob.sh/ to add timer functionality for mob programming sessions directly to your Stream Deck",
+	"Icon": "imgs/plugin/marketplace",
+	"SDKVersion": 2,
+	"Software": {
+		"MinimumVersion": "6.5"
+	},
+	"OS": [
+		{
+			"Platform": "mac",
+			"MinimumVersion": "12"
+		},
+		{
+			"Platform": "windows",
+			"MinimumVersion": "10"
+		}
+	],
+	"Nodejs": {
+		"Version": "20",
+		"Debug": "enabled"
+	},
+	"UUID": "me.junzhe.mob.timer"
+}

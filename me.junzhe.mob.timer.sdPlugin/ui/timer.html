@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <title>Timer Settings</title>
+    <meta charset="utf-8" />
+    <script src="https://sdpi-components.dev/releases/v4/sdpi-components.js"></script>
+</head>
+
+<body>
+    <!--
+        Learn more about property inspector components at https://sdpi-components.dev/docs/components
+    -->
+    <sdpi-item label="Host">
+        <sdpi-textfield
+            setting="host"
+            value="https://timer.mob.sh"
+            required>
+     </sdpi-textfield>
+    </sdpi-item>
+    <sdpi-item label="Room">
+        <sdpi-textfield
+            setting="room"
+            required>
+     </sdpi-textfield>
+    </sdpi-item>
+    <sdpi-item label="Name">
+        <sdpi-textfield
+            setting="name"
+            required>
+     </sdpi-textfield>
+    </sdpi-item>
+    <sdpi-item label="Duration in minutes">
+        <sdpi-textfield
+            setting="timer"
+            pattern="^[0-9]+$"
+            value="10"
+            required>
+     </sdpi-textfield>
+    </sdpi-item>
+</body>
+
+</html>
