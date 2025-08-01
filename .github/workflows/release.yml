@@ -1,5 +1,10 @@
 name: Build and Release Stream Deck Plugin
 
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
 on:
   push:
     tags:
@@ -47,6 +52,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: '*.streamDeckPlugin'
-          asset_name: mob-timer-${{ github.ref_name }}.streamDeckPlugin
+          asset_path: ./me.junzhe.mob.timer.streamDeckPlugin
+          asset_name: me.junzhe.mob.timer.streamDeckPlugin
           asset_content_type: application/octet-stream
