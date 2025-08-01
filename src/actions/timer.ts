@@ -13,7 +13,7 @@ import {
 } from '@elgato/streamdeck';
 import { EventSource } from 'eventsource';
 
-@action({ UUID: 'me.junzhe.mobtimer.action' })
+@action({ UUID: 'me.junzhe.mob.timer.action' })
 export class Timer extends SingletonAction<TimerSettings> {
   requestedTimestamp: number = 0;
   timerDurationInMilliseconds: number = 0;

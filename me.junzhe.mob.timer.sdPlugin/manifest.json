@@ -4,48 +4,30 @@
 	"Author": "Jun-Zhe Lai",
 	"Actions": [
 		{
-			"Name": "Counter",
-			"UUID": "me.junzhe.mob.timer.increment",
-			"Icon": "imgs/actions/counter/icon",
-			"Tooltip": "Displays a count, which increments by one on press.",
-			"PropertyInspectorPath": "ui/increment-counter.html",
+			"Icon": "imgs/actions/timer/icon",
+			"Name": "Timer",
 			"Controllers": [
-				"Keypad"
+				"Keypad",
+				"Encoder"
 			],
+			"Encoder": {
+				"layout": "layout/customlayout.json",
+				"StackColor": "#AABBCC",
+				"TriggerDescription": {
+					"Touch": "Start break timer",
+					"LongTouch": "Start mob timer"
+				}
+			},
 			"States": [
 				{
-					"Image": "imgs/actions/counter/key",
+					"Image": "imgs/black",
+					"FontSize": 14,
 					"TitleAlignment": "middle"
 				}
-			]
-		},
-		{
-		"Icon": "imgs/actions/timer/icon",
-		"Name": "Timer",
-		"Controllers": [
-			"Keypad",
-			"Encoder"
-		],
-		"Encoder": {
-			"background": "backgroundImage",
-			"Icon": "StackAndLayoutImage",
-			"layout": "layout/customlayout.json",
-			"StackColor": "#AABBCC",
-			"TriggerDescription": {
-			"Touch": "Start break timer",
-			"LongTouch": "Start mob timer"
-			}
-		},
-		"States": [
-			{
-			"Image": "actions/template/assets/black",
-			"FontSize": 14,
-			"TitleAlignment": "middle"
-			}
-		],
-		"Tooltip": "Adds a timer",
-		"UUID": "me.junzhe.mobtimer.action",
-		"PropertyInspectorPath": "ui/timer.html"
+			],
+			"Tooltip": "Adds a timer",
+			"UUID": "me.junzhe.mob.timer.action",
+			"PropertyInspectorPath": "ui/timer.html"
 		}
 	],
 	"Category": "mob timer",
