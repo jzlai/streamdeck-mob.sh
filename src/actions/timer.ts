@@ -19,63 +19,21 @@ export class Timer extends SingletonAction<TimerSettings> {
   timerDurationInMilliseconds: number = 0;
   roomEventsUrl: string = '';
   hostUrl: string = '';
+  eventSource?: EventSource = undefined;
+  interval: NodeJS.Timeout | null = null;
 
   override onWillAppear(ev: WillAppearEvent<TimerSettings>): void {
-    const { payload, action } = ev;
-    const {
-      settings: { host, room },
-    } = payload;
-    this.roomEventsUrl = `${host}/${room}/events`;
-
-    console.log('Timer action received settings', payload);
-    const eventSource = new EventSource(this.roomEventsUrl);
-    let interval: NodeJS.Timeout | null = null;
-    try {
-      if (eventSource && eventSource.readyState === EventSource.OPEN) {
-        console.log('closing open EventSource');
-        eventSource.close();
-      }
-
-      eventSource.onopen = () => {
-        console.log('opened connection to ' + this.roomEventsUrl);
-      };
-
-      eventSource.addEventListener('TIMER_REQUEST', (event: any) => {
-        if (interval) {
-          console.log('clearing existing interval');
-          clearInterval(interval);
-        }
-        console.log('received timer request', event);
-        const timerRequest = JSON.parse(event.data);
-        let { requested, timer: timerInMinutes, type } = timerRequest;
-        if (!requested) {
-          this.reset(interval, action);
-          return;
-        }
-        this.requestedTimestamp = Date.parse(requested);
-        this.timerDurationInMilliseconds = timerInMinutes * 60 * 1000;
-        interval = setInterval(() => {
-          let elapsedMillisecondsSinceRequested =
-            Date.now() - this.requestedTimestamp;
-          if (
-            elapsedMillisecondsSinceRequested > this.timerDurationInMilliseconds
-          ) {
-            this.reset(interval, action);
-            return;
-          }
-          const remainingTime = getCountdownRemainingTimeString(
-            this.timerDurationInMilliseconds,
-            elapsedMillisecondsSinceRequested,
-          );
-          const prefix = type === 'BREAKTIMER' ? '☕' : '⏲️';
-          setText(`${prefix} ${remainingTime}`, action);
-        }, 1000);
-      });
-    } catch (error) {
-      console.error(error);
-      this.reset(interval, action);
-    }
+    this.reset(ev.action);
+    this.init(ev);
   }
+
+  override onDidReceiveSettings(
+    ev: DidReceiveSettingsEvent<TimerSettings>,
+  ): Promise<void> | void {
+    this.reset(ev.action);
+    this.init(ev);
+  }
+
   override async onKeyUp({
     payload: { settings },
   }: KeyUpEvent<TimerSettings>): Promise<void> {
@@ -106,14 +64,68 @@ export class Timer extends SingletonAction<TimerSettings> {
     }
   };
 
-  reset = (
-    interval: NodeJS.Timeout | null,
-    action: DialAction<TimerSettings> | KeyAction<TimerSettings>,
-  ) => {
-    if (interval) {
-      clearInterval(interval);
+  reset = (action: DialAction<TimerSettings> | KeyAction<TimerSettings>) => {
+    if (this.interval) {
+      clearInterval(this.interval);
     }
     setText('mob timer', action);
+  };
+
+  init = (
+    ev: WillAppearEvent<TimerSettings> | DidReceiveSettingsEvent<TimerSettings>,
+  ) => {
+    const { payload, action } = ev;
+    const {
+      settings: { host, room },
+    } = payload;
+    this.roomEventsUrl = `${host}/${room}/events`;
+
+    this.eventSource = new EventSource(this.roomEventsUrl);
+    try {
+      if (
+        this.eventSource &&
+        this.eventSource.readyState === this.eventSource.OPEN
+      ) {
+        this.eventSource.close();
+      }
+
+      this.eventSource.onopen = () => {
+        console.log('opened connection to ' + this.roomEventsUrl);
+      };
+
+      this.eventSource.addEventListener('TIMER_REQUEST', (event: any) => {
+        if (this.interval) {
+          clearInterval(this.interval);
+        }
+        const timerRequest = JSON.parse(event.data);
+        let { requested, timer: timerInMinutes, type } = timerRequest;
+        if (!requested) {
+          this.reset(action);
+          return;
+        }
+        this.requestedTimestamp = Date.parse(requested);
+        this.timerDurationInMilliseconds = timerInMinutes * 60 * 1000;
+        this.interval = setInterval(() => {
+          let elapsedMillisecondsSinceRequested =
+            Date.now() - this.requestedTimestamp;
+          if (
+            elapsedMillisecondsSinceRequested > this.timerDurationInMilliseconds
+          ) {
+            this.reset(action);
+            return;
+          }
+          const remainingTime = getCountdownRemainingTimeString(
+            this.timerDurationInMilliseconds,
+            elapsedMillisecondsSinceRequested,
+          );
+          const prefix = type === 'BREAKTIMER' ? '☕' : '⏲️';
+          setText(`${prefix} ${remainingTime}`, action);
+        }, 500);
+      });
+    } catch (error) {
+      console.error(error);
+      this.reset(action);
+    }
   };
 }
 

@@ -5,6 +5,18 @@
     <title>Timer Settings</title>
     <meta charset="utf-8" />
     <script src="https://sdpi-components.dev/releases/v4/sdpi-components.js"></script>
+    <script>
+        const { streamDeckClient } = SDPIComponents;
+        streamDeckClient.didReceiveSettings.subscribe(event => {
+            const { settings } = event.payload
+            streamDeckClient.setSettings({
+                host: settings.host ?? 'https://timer.mob.sh',
+                room: settings.room ?? 'guenther',
+                name: settings.name ?? 'unknown',
+                timer: settings.timer ?? 10,
+            });
+        })
+    </script>
 </head>
 
 <body>
@@ -14,13 +26,14 @@
     <sdpi-item label="Host">
         <sdpi-textfield
             setting="host"
-            value="https://timer.mob.sh"
+            placeholer="https://timer.mob.sh"
             required>
      </sdpi-textfield>
     </sdpi-item>
     <sdpi-item label="Room">
         <sdpi-textfield
             setting="room"
+            placeholer="guenther"
             required>
      </sdpi-textfield>
     </sdpi-item>
@@ -34,7 +47,6 @@
         <sdpi-textfield
             setting="timer"
             pattern="^[0-9]+$"
-            value="10"
             required>
      </sdpi-textfield>
     </sdpi-item>

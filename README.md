@@ -7,7 +7,7 @@ A Stream Deck plugin that integrates with [timer.mob.sh](https://timer.mob.sh/) 
 ## Features
 
 - Display and control mob programming timers on your Stream Deck
-- Start regular mob timers or break timers with a single tap
+- Start regular mob timers or break timers with a single tap or touch
 - Real-time countdown display on Stream Deck buttons
 - Configurable room, user name, and timer duration
 - Works with both Stream Deck keypads and encoders
@@ -46,6 +46,17 @@ The plugin displays the timer status on your Stream Deck button:
 - ⏲️ - Indicates a mob programming timer is running
 - ☕ - Indicates a break timer is running
 - The remaining time is shown in MM:SS format
+
+## Installation
+
+To install the plugin, follow these steps:
+
+1. Download the latest release artifact from the [Releases](https://github.com/jzlai/streamdeck-mob.sh/releasess) page.
+2. Extract the downloaded artifact.
+3. Execute the installation file included in the artifact.
+4. Follow the on-screen instructions to complete the installation.
+
+Once installed, the plugin will be available in your Stream Deck software.
 
 ## Contributing
 
